@@ -1,3 +1,14 @@
+class Piece:
+    def __init__(self, color, position):
+        self.color = color
+        self.position = position
+
+    @staticmethod
+    def is_position_on_board(position):
+        row, col = position
+        return 1 <= row <= 8 and 1 <= col <= 8
+
+
 class Pawn(Piece):
     def possible_moves(self):
         row, col = self.position
@@ -14,12 +25,25 @@ class Pawn(Piece):
         return f'Pawn({self.color}) at position {self.position}'
 
 
+class Knight(Piece):
+    def possible_moves(self):
+        row, col = self.position
+        moves = [
+            (row + 2, col + 1), (row + 2, col - 1),
+            (row - 2, col + 1), (row - 2, col - 1),
+            (row + 1, col + 2), (row + 1, col - 2),
+            (row - 1, col + 2), (row - 1, col - 2)
+        ]
+        return [move for move in moves if self.is_position_on_board(move)]
+
+    def __str__(self):
+        return f'Knight({self.color}) at position {self.position}'
+
+
 class Bishop(Piece):
     def possible_moves(self):
         row, col = self.position
         moves = []
-
-        # Diagonály
         for i in range(1, 8):
             moves += [
                 (row + i, col + i),
@@ -27,7 +51,6 @@ class Bishop(Piece):
                 (row - i, col + i),
                 (row - i, col - i)
             ]
-
         return [move for move in moves if self.is_position_on_board(move)]
 
     def __str__(self):
@@ -38,13 +61,11 @@ class Rook(Piece):
     def possible_moves(self):
         row, col = self.position
         moves = []
-
         for i in range(1, 8):
             moves += [
-                (row + i, col), (row - i, col),  # Vertikální
-                (row, col + i), (row, col - i)   # Horizontální
+                (row + i, col), (row - i, col),
+                (row, col + i), (row, col - i)
             ]
-
         return [move for move in moves if self.is_position_on_board(move)]
 
     def __str__(self):
@@ -65,12 +86,11 @@ class King(Piece):
     def possible_moves(self):
         row, col = self.position
         moves = [
-            (row + 1, col), (row - 1, col),  # Vertikalni
-            (row, col + 1), (row, col - 1),  # Horizontalni
-            (row + 1, col + 1), (row + 1, col - 1),  # Diagonaly
+            (row + 1, col), (row - 1, col),
+            (row, col + 1), (row, col - 1),
+            (row + 1, col + 1), (row + 1, col - 1),
             (row - 1, col + 1), (row - 1, col - 1)
         ]
-
         return [move for move in moves if self.is_position_on_board(move)]
 
     def __str__(self):
@@ -116,6 +136,7 @@ def main():
 
     print(piece)
     print("Možné tahy:", piece.possible_moves())
+
 
 if __name__ == "__main__":
     main()
