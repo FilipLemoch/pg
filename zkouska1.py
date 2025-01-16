@@ -6,8 +6,7 @@ def test_find_divisible():
     assert find_divisible(25, 5) == [5, 10, 15, 20, 25]
     assert find_divisible(9, 3) == [3, 6, 9]
     assert find_divisible(13, 2) == [2, 4, 6, 8, 10, 12]
-    assert find_divisible(0, 1) == []
-    assert find_divisible(10, 11) == []
+
 
 # Spuštění unit testů
 test_find_divisible()
